@@ -120,5 +120,13 @@ print("Results Page:",URL)
 # Statistics
 num_bins = 20
 
-plt.hist(filtered_prices, num_bins, density=False, rwidth=0.9)
+fig, ax = plt.subplots()
+
+props = dict(boxstyle='square', facecolor='orange', alpha=0.33)
+ax.hist(filtered_prices, "auto", density=False, rwidth=0.9)
+ax.text(0, 1.2, output_max_price+"\n"+output_min_price+"\n"+output_average, transform=ax.transAxes, fontsize=11, fontfamily="monospace", verticalalignment='top', bbox=props)
+ax.set_xlabel('CHF') 
+ax.set_ylabel('Sold Items') 
+
+plt.subplots_adjust(bottom=0.1, left=0.1, right=0.98, top=0.8)
 plt.show()
