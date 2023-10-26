@@ -1,7 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
 import numpy as np
+import pandas as pd
 from urllib.parse import quote_plus
+import matplotlib
+import matplotlib.pyplot as plt
 
 # get average of a list
 def Average(lst): 
@@ -65,15 +68,15 @@ if len(prices) < 3:
     print("not enough sold products found...")
     exit()
 
+# prices = sorted(prices, reverse=True)
+
 # calculate values for filtering out items which deviate too much
-Q1 = np.percentile(prices, 25, method='midpoint')
-Q3 = np.percentile(prices, 75, method='midpoint')
+Q1 = np.percentile(prices, 33, method='midpoint')
+Q3 = np.percentile(prices, 67, method='midpoint')
 IQR = Q3 - Q1
 
-upper=Q3+1.5*IQR
-upper_array=np.array(prices>=upper)
-lower=Q1-1.5*IQR
-lower_array=np.array(prices<=lower)
+upper=Q3+1.25*IQR
+lower=Q1-1.25*IQR
 
 # filter list
 filtered_prices = []
@@ -81,6 +84,9 @@ for price in prices:
     if price > lower and price < upper:
         filtered_prices.append(price)
 
+# sorted = sorted(filtered_prices, reverse=True)
+
+# print(*sorted, sep="\n")
 
 # calculate average
 average_price = Average(filtered_prices)
@@ -109,3 +115,10 @@ print(output_min_price)
 print(output_average)
 print("")
 print("Results Page:",URL)
+
+
+# Statistics
+num_bins = 20
+
+plt.hist(filtered_prices, num_bins, density=False, rwidth=0.9)
+plt.show()
