@@ -68,8 +68,6 @@ if len(prices) < 3:
     print("not enough sold products found...")
     exit()
 
-# prices = sorted(prices, reverse=True)
-
 # calculate values for filtering out items which deviate too much
 Q1 = np.percentile(prices, 33, method='midpoint')
 Q3 = np.percentile(prices, 67, method='midpoint')
@@ -83,10 +81,6 @@ filtered_prices = []
 for price in prices:
     if price > lower and price < upper:
         filtered_prices.append(price)
-
-# sorted = sorted(filtered_prices, reverse=True)
-
-# print(*sorted, sep="\n")
 
 # calculate average
 average_price = Average(filtered_prices)
